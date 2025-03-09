@@ -1,4 +1,3 @@
-const game = new Minesweeper(5, 5, 0.4);
-console.log(game.mines);
+const game = new Minesweeper("game-board", 10, 10, 0.4);
 game.fillnumSurrounding();
-console.log(game.numSurrounding);
+game.print();
