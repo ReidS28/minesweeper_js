@@ -22,7 +22,7 @@ class Minesweeper {
 
 	createBoardObject() {
 		const container = document.getElementById(this.divID);
-		container.innerHTML = ""; // Clear any existing content
+		container.innerHTML = "";
 
 		for (let r = 0; r < this.rows; r++) {
 			const rowDiv = document.createElement("div");
@@ -37,7 +37,7 @@ class Minesweeper {
 
 				// Add click event listener
 				cellDiv.addEventListener("click", () => {
-					this.cellClicked(cellDiv, r, c);
+					this.cellDug(cellDiv, r, c);
 				});
 
 				rowDiv.appendChild(cellDiv);
@@ -47,7 +47,7 @@ class Minesweeper {
 		}
 	}
 
-	cellClicked(cellDiv, r, c) {
+	cellDug(cellDiv, r, c) {
 		const numberToDisplay = this.numSurrounding[r][c];
 		cellDiv.innerHTML = numberToDisplay;
         cellDiv.style.backgroundColor = 'rgba(0, 0, 0, 0)';
@@ -55,23 +55,23 @@ class Minesweeper {
         if (numberToDisplay === 0) {
             cellDiv.style.color = 'rgba(0, 0, 0, 0)';
         } else if (numberToDisplay === 1) {
-            cellDiv.style.color = 'rgb(8, 0, 61)';  // Color for number 1
+            cellDiv.style.color = '#221ddb';
         } else if (numberToDisplay === 2) {
-            cellDiv.style.color = 'rgb(0, 84, 6)';  // Color for number 2
+            cellDiv.style.color = '#017d00';
         } else if (numberToDisplay === 3) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 3
+            cellDiv.style.color = '#fa0103';
         } else if (numberToDisplay === 4) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 4
+            cellDiv.style.color = '#1f0eb3';
         } else if (numberToDisplay === 5) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 5
+            cellDiv.style.color = '#820200';
         } else if (numberToDisplay === 6) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 6
+            cellDiv.style.color = '#00807f';
         } else if (numberToDisplay === 7) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 7
+            cellDiv.style.color = '#9403fc';
         } else if (numberToDisplay === 8) {
-            cellDiv.style.color = 'rgb(0, 0, 0)';  // Color for number 8
+            cellDiv.style.color = '#c90caa';
         } else {
-            cellDiv.style.color = 'white';  // Color for other numbers
+            cellDiv.style.color = 'white';
         }
 	}
 

@@ -4,12 +4,18 @@
 	align-items: center;
 	border-radius: 15px;
 	overflow: hidden;
-	background-color: #353535;
+	background-color: #242424;
 	border-radius: 2vh;
 	margin: auto;
 	width: fit-content;
 	height: fit-content;
 	padding: 1vh;
+
+    /* No Highlighting */
+    user-select: none; 
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .row {
@@ -26,7 +32,7 @@
 
     font-family: 'Courier New', Courier, monospace;
     font-weight: 1000;
-    font-size: 5vh; /* Set font size relative to the viewport height */
+    font-size: 6vh; /* Set font size relative to the viewport height */
     display: flex;  /* Flexbox for centering */
     justify-content: center;  /* Center the content horizontally */
     align-items: center;  /* Center the content vertically */
