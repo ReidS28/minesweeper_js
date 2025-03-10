@@ -37,7 +37,6 @@ class Minesweeper {
 
 				// Add click event listener
 				cellDiv.addEventListener("click", () => {
-					console.log(`Value at [${r}][${c}]:`, this.numSurrounding[r][c]);
 					this.cellDug(cellDiv, r, c);
 				});
 
@@ -57,19 +56,42 @@ class Minesweeper {
 
 		const colors = {
 			"-1": "#f01313",
-			"0": "rgba(255, 0, 255, 1)",
-			"1": "#221ddb",
-			"2": "#017d00",
-			"3": "#fa0103",
-			"4": "#1f0eb3",
-			"5": "#820200",
-			"6": "#00807f",
-			"7": "#9403fc",
-			"8": "#c90caa"
+			0: "rgba(0, 0, 0, 0)",
+			1: "#221ddb",
+			2: "#017d00",
+			3: "#fa0103",
+			4: "#1f0eb3",
+			5: "#820200",
+			6: "#00807f",
+			7: "#9403fc",
+			8: "#c90caa",
 		};
 
 		cellDiv.style.color = colors[numberToDisplay] || "white";
 
+		if (numberToDisplay === -1) {
+			cellDiv.innerHTML = "💣";
+		}
+
+		// If tile is 0
+		if (numberToDisplay == 0) {
+			console.log("e");
+			for (let row = r - 1; row <= r + 1; row++) {
+				for (let col = c - 1; col <= c + 1; col++) {
+					if (
+						row>= 0 &&
+						row< this.rows &&
+						col>= 0 &&
+						col< this.cols &&
+						!(row == r && col == c) &&
+						this.numSurrounding[row][col] == 0
+					) {
+						console.log(`r: ${row}, c: ${col}`);
+						this.cellDug(cellDiv, row, col);
+					}
+				}
+			}
+		}
 	}
 
 	fillBoard() {
@@ -119,15 +141,6 @@ class Minesweeper {
 		}
 
 		return count;
-	}
-
-	print() {
-		for (const element of this.mines) {
-			console.log(element.toString());
-		}
-		for (const element of this.numSurrounding) {
-			console.log(element.toString());
-		}
 	}
 }
 
