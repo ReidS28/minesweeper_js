@@ -1,6 +1,6 @@
 entrypoint="index.html"
 hidden=[".config"]
-modules = ["web:v2-20230623-0b7a606"]
+modules = ["nodejs-20", "web:v2-20230623-0b7a606"]
 
 [nix]
 channel = "stable-23_11"
@@ -8,7 +8,7 @@ channel = "stable-23_11"
 [deployment]
 publicDir = "/"
 deploymentTarget = "static"
-run = ["sh", "-c", "npx web-dev-server --port 3000 --app-index index.html"]
+run = ["sh", "-c", "python3 -m http.server 3000 --bind 0.0.0.0"]
 
 [workflows]
 runButton = "Run"
@@ -19,4 +19,8 @@ author = 25742947
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx web-dev-server --open --watch --port 3000 --app-index index.html"
+args = "npx serve -l 3000"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
