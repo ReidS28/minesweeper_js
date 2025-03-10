@@ -37,6 +37,7 @@ class Minesweeper {
 
 				// Add click event listener
 				cellDiv.addEventListener("click", () => {
+					console.log(`Value at [${r}][${c}]:`, this.numSurrounding[r][c]);
 					this.cellDug(cellDiv, r, c);
 				});
 
@@ -50,29 +51,25 @@ class Minesweeper {
 	cellDug(cellDiv, r, c) {
 		const numberToDisplay = this.numSurrounding[r][c];
 		cellDiv.innerHTML = numberToDisplay;
-        cellDiv.style.backgroundColor = 'rgba(0, 0, 0, 0)';
 
-        if (numberToDisplay === 0) {
-            cellDiv.style.color = 'rgba(0, 0, 0, 0)';
-        } else if (numberToDisplay === 1) {
-            cellDiv.style.color = '#221ddb';
-        } else if (numberToDisplay === 2) {
-            cellDiv.style.color = '#017d00';
-        } else if (numberToDisplay === 3) {
-            cellDiv.style.color = '#fa0103';
-        } else if (numberToDisplay === 4) {
-            cellDiv.style.color = '#1f0eb3';
-        } else if (numberToDisplay === 5) {
-            cellDiv.style.color = '#820200';
-        } else if (numberToDisplay === 6) {
-            cellDiv.style.color = '#00807f';
-        } else if (numberToDisplay === 7) {
-            cellDiv.style.color = '#9403fc';
-        } else if (numberToDisplay === 8) {
-            cellDiv.style.color = '#c90caa';
-        } else {
-            cellDiv.style.color = 'white';
-        }
+		// Make cell transparent
+		cellDiv.style.backgroundColor = "rgba(0, 0, 0, 0)";
+
+		const colors = {
+			"-1": "#f01313",
+			"0": "rgba(1, 0, 0, 1)",
+			"1": "#221ddb",
+			"2": "#017d00",
+			"3": "#fa0103",
+			"4": "#1f0eb3",
+			"5": "#820200",
+			"6": "#00807f",
+			"7": "#9403fc",
+			"8": "#c90caa"
+		};
+
+		cellDiv.style.color = colors[numberToDisplay] || "white";
+
 	}
 
 	fillBoard() {
@@ -121,7 +118,6 @@ class Minesweeper {
 			}
 		}
 
-		console.log(count);
 		return count;
 	}
 
