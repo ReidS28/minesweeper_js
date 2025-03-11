@@ -36,7 +36,7 @@ main {
 	aspect-ratio: calc(var(--cols) / var(--rows)); /* Correct aspect ratio */
 	object-fit: contain; /* Ensure the grid fits properly within its container */
 
-	gap: 1%; /* Adds space between the cells */
+	gap: 0%; /* Adds space between the cells */
 }
 
 .cell {
@@ -53,7 +53,7 @@ main {
 	font-weight: 1000;
 
 	font-size: calc(
-		90vmin / (var(--rows) * 1)
+		90vmin / (max(var(--rows), var(--cols)) * 1)
 	); /* Dynamically adjust font size */
 	line-height: 1; /* Prevents extra spacing inside the cell */
 

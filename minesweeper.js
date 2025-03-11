@@ -86,8 +86,8 @@ class Minesweeper {
 		}
 	
 		// If tile is 0, uncover all surrounding cells
-		//if (numberToDisplay == 0) {
-		if (true) {
+		if (numberToDisplay == 0) {
+		//if (true) {
 			for (let row = r - 1; row <= r + 1; row++) {
 				for (let col = c - 1; col <= c + 1; col++) {
 					if (
