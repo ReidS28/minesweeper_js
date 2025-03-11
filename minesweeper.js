@@ -15,57 +15,88 @@ class Minesweeper {
 		this.mines = create2DArray(this.rows, this.cols, false);
 		this.flags = create2DArray(this.rows, this.cols, false);
 		this.uncovered = create2DArray(this.rows, this.cols, false);
-		this.numSurrounding = create2DArray(this.rows, this.cols, 0);
 
-		this.fillBoard();
+		this.placeMines(this.numMines);
 		this.createBoardObject();
 	}
 
 	createBoardObject() {
 		const container = document.getElementById(this.divID);
-	
+
 		// Set dynamic grid size based on rows/cols
-		container.style.setProperty('--rows', this.rows);
-		container.style.setProperty('--cols', this.cols);
-	
+		container.style.setProperty("--rows", this.rows);
+		container.style.setProperty("--cols", this.cols);
+
 		container.innerHTML = "";
-	
+
 		for (let r = 0; r < this.rows; r++) {
 			for (let c = 0; c < this.cols; c++) {
 				const cellDiv = document.createElement("div");
 				cellDiv.classList.add("cell");
-	
+
 				cellDiv.setAttribute("data-row", r);
 				cellDiv.setAttribute("data-col", c);
-	
+
 				// Add click event listener
 				cellDiv.addEventListener("click", () => {
 					this.uncoverCell(r, c);
 				});
-	
+
 				container.appendChild(cellDiv);
 			}
 		}
-	}	
+	}
 
 	uncoverCell(r, c) {
 		if (this.uncovered[r][c]) return; // Prevent uncovering already uncovered cells
-	
+
+		// Fun Mode
+		// /*
+		if (!this.mines[r][c]) {
+			const directions = [
+				[-1, -1],
+				[-1, 0],
+				[-1, 1],
+				[0, -1],
+				[0, 1],
+				[1, -1],
+				[1, 0],
+				[1, 1],
+			];
+
+			for (const [dr, dc] of directions) {
+				const row = r + dr;
+				const col = c + dc;
+
+				// Check boundaries
+				if (
+					row >= 0 &&
+					row < this.rows &&
+					col >= 0 &&
+					col < this.cols &&
+					!this.uncovered[row][col]
+				) {
+					this.mines[row][col] = true;
+				}
+			}
+		}
+		// */
+
 		this.uncovered[r][c] = true;
 		const cellDiv = document.querySelector(
 			`[data-row="${r}"][data-col="${c}"]`
 		);
-	
-		const numberToDisplay = this.numSurrounding[r][c];
-		cellDiv.innerHTML = numberToDisplay;
-	
+
+		const numSurrounding = this.getNumSurrounding(r, c);
+		cellDiv.innerHTML = numSurrounding;
+
 		// Add pop effect
-		cellDiv.classList.add('pop');
-		setTimeout(() => cellDiv.classList.remove('pop'), 200); // Remove after animation
-	
+		cellDiv.classList.add("pop");
+		setTimeout(() => cellDiv.classList.remove("pop"), 200); // Remove after animation
+
 		// Make cell transparent
 		cellDiv.style.backgroundColor = "rgba(0, 0, 0, 0)";
-	
+
 		const colors = {
 			"-1": "#f01313",
 			0: "rgba(0, 0, 0, 0)",
@@ -78,36 +109,41 @@ class Minesweeper {
 			7: "#9403fc",
 			8: "#c90caa",
 		};
-	
-		cellDiv.style.color = colors[numberToDisplay] || "white";
-	
-		if (numberToDisplay === -1) {
+
+		cellDiv.style.color = colors[numSurrounding] || "white";
+
+		if (numSurrounding === -1) {
 			cellDiv.innerHTML = "💣";
 		}
-	
-		// If tile is 0, uncover all surrounding cells
-		if (numberToDisplay == 0) {
-		//if (true) {
-			for (let row = r - 1; row <= r + 1; row++) {
-				for (let col = c - 1; col <= c + 1; col++) {
-					if (
-						row >= 0 &&
-						row < this.rows &&
-						col >= 0 &&
-						col < this.cols &&
-						!(row == r && col == c)
-					) {
-						setTimeout(() => this.uncoverCell(row, col), 40);
-					}
+
+		if (numSurrounding == 0) {
+			//if (true) {
+			const directions = [
+				[-1, -1],
+				[-1, 0],
+				[-1, 1],
+				[0, -1],
+				[0, 1],
+				[1, -1],
+				[1, 0],
+				[1, 1],
+			];
+
+			for (const [dr, dc] of directions) {
+				const row = r + dr;
+				const col = c + dc;
+
+				// Check boundaries
+				if (row >= 0 && row < this.rows && col >= 0 && col < this.cols) {
+					setTimeout(() => this.uncoverCell(row, col), 40);
 				}
 			}
 		}
 	}
-	
 
-	fillBoard() {
+	placeMines(numMines) {
 		this.mines = create2DArray(this.rows, this.cols, false);
-		for (let i = 0; i < this.numMines; i++) {
+		for (let i = 0; i < numMines; i++) {
 			for (let i = 0; i < 10; i++) {
 				let row = Math.floor(Math.random() * this.rows);
 				let col = Math.floor(Math.random() * this.cols);
@@ -119,21 +155,9 @@ class Minesweeper {
 		}
 	}
 
-	fillnumSurrounding() {
-		for (let r = 0; r < this.rows; r++) {
-			for (let c = 0; c < this.cols; c++) {
-				if (!this.mines[r][c]) {
-					this.numSurrounding[r][c] = this.getNumSurrounding(r, c);
-				} else {
-					this.numSurrounding[r][c] = -1;
-				}
-			}
-		}
-	}
-
 	getNumSurrounding(row, col) {
 		if (this.mines[row][col]) {
-			throw new RangeError("Selected tile is a mine");
+			return -1;
 		}
 
 		let count = 0;
