@@ -50,48 +50,29 @@ class Minesweeper {
 	cellDug(cellDiv, r, c) {
 		const numberToDisplay = this.numSurrounding[r][c];
 		cellDiv.innerHTML = numberToDisplay;
+        cellDiv.style.backgroundColor = 'rgba(0, 0, 0, 0)';
 
-		// Make cell transparent
-		cellDiv.style.backgroundColor = "rgba(0, 0, 0, 0)";
-
-		const colors = {
-			"-1": "#f01313",
-			0: "rgba(0, 0, 0, 0)",
-			1: "#221ddb",
-			2: "#017d00",
-			3: "#fa0103",
-			4: "#1f0eb3",
-			5: "#820200",
-			6: "#00807f",
-			7: "#9403fc",
-			8: "#c90caa",
-		};
-
-		cellDiv.style.color = colors[numberToDisplay] || "white";
-
-		if (numberToDisplay === -1) {
-			cellDiv.innerHTML = "💣";
-		}
-
-		// If tile is 0
-		if (numberToDisplay == 0) {
-			console.log("e");
-			for (let row = r - 1; row <= r + 1; row++) {
-				for (let col = c - 1; col <= c + 1; col++) {
-					if (
-						row>= 0 &&
-						row< this.rows &&
-						col>= 0 &&
-						col< this.cols &&
-						!(row == r && col == c) &&
-						this.numSurrounding[row][col] == 0
-					) {
-						console.log(`r: ${row}, c: ${col}`);
-						this.cellDug(cellDiv, row, col);
-					}
-				}
-			}
-		}
+        if (numberToDisplay === 0) {
+            cellDiv.style.color = 'rgba(0, 0, 0, 0)';
+        } else if (numberToDisplay === 1) {
+            cellDiv.style.color = '#221ddb';
+        } else if (numberToDisplay === 2) {
+            cellDiv.style.color = '#017d00';
+        } else if (numberToDisplay === 3) {
+            cellDiv.style.color = '#fa0103';
+        } else if (numberToDisplay === 4) {
+            cellDiv.style.color = '#1f0eb3';
+        } else if (numberToDisplay === 5) {
+            cellDiv.style.color = '#820200';
+        } else if (numberToDisplay === 6) {
+            cellDiv.style.color = '#00807f';
+        } else if (numberToDisplay === 7) {
+            cellDiv.style.color = '#9403fc';
+        } else if (numberToDisplay === 8) {
+            cellDiv.style.color = '#c90caa';
+        } else {
+            cellDiv.style.color = 'white';
+        }
 	}
 
 	fillBoard() {
@@ -140,7 +121,17 @@ class Minesweeper {
 			}
 		}
 
+		console.log(count);
 		return count;
+	}
+
+	print() {
+		for (const element of this.mines) {
+			console.log(element.toString());
+		}
+		for (const element of this.numSurrounding) {
+			console.log(element.toString());
+		}
 	}
 }
 
