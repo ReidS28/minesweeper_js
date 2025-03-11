@@ -14,6 +14,7 @@ class Minesweeper {
 		this.numMines = Math.floor(this.rows * this.cols * percent);
 		this.mines = create2DArray(this.rows, this.cols, false);
 		this.flags = create2DArray(this.rows, this.cols, false);
+		this.uncovered = create2DArray(this.rows, this.cols, false);
 		this.numSurrounding = create2DArray(this.rows, this.cols, 0);
 
 		this.fillBoard();
@@ -22,38 +23,49 @@ class Minesweeper {
 
 	createBoardObject() {
 		const container = document.getElementById(this.divID);
+	
+		// Set dynamic grid size based on rows/cols
+		container.style.setProperty('--rows', this.rows);
+		container.style.setProperty('--cols', this.cols);
+	
 		container.innerHTML = "";
-
+	
 		for (let r = 0; r < this.rows; r++) {
-			const rowDiv = document.createElement("div");
-			rowDiv.classList.add("row");
-
 			for (let c = 0; c < this.cols; c++) {
 				const cellDiv = document.createElement("div");
 				cellDiv.classList.add("cell");
-
+	
 				cellDiv.setAttribute("data-row", r);
 				cellDiv.setAttribute("data-col", c);
-
+	
 				// Add click event listener
 				cellDiv.addEventListener("click", () => {
-					this.cellDug(cellDiv, r, c);
+					this.uncoverCell(r, c);
 				});
-
-				rowDiv.appendChild(cellDiv);
+	
+				container.appendChild(cellDiv);
 			}
-
-			container.appendChild(rowDiv);
 		}
-	}
+	}	
 
-	cellDug(cellDiv, r, c) {
+	uncoverCell(r, c) {
+		if (this.uncovered[r][c]) return; // Prevent uncovering already uncovered cells
+	
+		this.uncovered[r][c] = true;
+		const cellDiv = document.querySelector(
+			`[data-row="${r}"][data-col="${c}"]`
+		);
+	
 		const numberToDisplay = this.numSurrounding[r][c];
 		cellDiv.innerHTML = numberToDisplay;
-
+	
+		// Add pop effect
+		cellDiv.classList.add('pop');
+		setTimeout(() => cellDiv.classList.remove('pop'), 200); // Remove after animation
+	
 		// Make cell transparent
 		cellDiv.style.backgroundColor = "rgba(0, 0, 0, 0)";
-
+	
 		const colors = {
 			"-1": "#f01313",
 			0: "rgba(0, 0, 0, 0)",
@@ -66,33 +78,32 @@ class Minesweeper {
 			7: "#9403fc",
 			8: "#c90caa",
 		};
-
+	
 		cellDiv.style.color = colors[numberToDisplay] || "white";
-
+	
 		if (numberToDisplay === -1) {
 			cellDiv.innerHTML = "💣";
 		}
-
-		// If tile is 0
-		if (numberToDisplay == 0) {
-			console.log("e");
+	
+		// If tile is 0, uncover all surrounding cells
+		//if (numberToDisplay == 0) {
+		if (true) {
 			for (let row = r - 1; row <= r + 1; row++) {
 				for (let col = c - 1; col <= c + 1; col++) {
 					if (
-						row>= 0 &&
-						row< this.rows &&
-						col>= 0 &&
-						col< this.cols &&
-						!(row == r && col == c) &&
-						this.numSurrounding[row][col] == 0
+						row >= 0 &&
+						row < this.rows &&
+						col >= 0 &&
+						col < this.cols &&
+						!(row == r && col == c)
 					) {
-						console.log(`r: ${row}, c: ${col}`);
-						this.cellDug(cellDiv, row, col);
+						setTimeout(() => this.uncoverCell(row, col), 40);
 					}
 				}
 			}
 		}
 	}
+	
 
 	fillBoard() {
 		this.mines = create2DArray(this.rows, this.cols, false);

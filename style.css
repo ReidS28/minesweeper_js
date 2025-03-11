@@ -1,40 +1,87 @@
-#game-board {
-	display: grid;
-	justify-items: center;
+main {
+	display: flex;
+	justify-content: center;
 	align-items: center;
-	border-radius: 15px;
-	overflow: hidden;
-	background-color: #242424;
-	border-radius: 2vh;
-	margin: auto;
-	width: fit-content;
-	height: fit-content;
-	padding: 1vh;
-
-    /* No Highlighting */
-    user-select: none; 
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+	height: 100vh; /* Ensures the main element takes up the full screen height */
+	margin: 0; /* Removes any default margin from the body */
 }
 
-.row {
+#game-board-wrapper {
+	width: 80vw; /* Set to 80% of the viewport width */
+	height: 80vh; /* Set to 80% of the viewport height */
+	max-width: 80vw;
+	max-height: 80vh;
 	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	background-color: #323232; /* Optional: background color for the wrapper */
+	border-radius: 2vh; /* Optional: rounded corners for the wrapper */
+}
+
+#game-board {
+	background-color: #242424;
+	border-radius: 2vh;
+
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+
+	display: grid;
+	grid-template-columns: repeat(var(--cols), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
+	max-width: 100%;
+	max-height: 100%;
+	aspect-ratio: calc(var(--cols) / var(--rows)); /* Correct aspect ratio */
+	object-fit: contain; /* Ensure the grid fits properly within its container */
+
+	gap: 1%; /* Adds space between the cells */
 }
 
 .cell {
-    width: 6vh;
-    height: 6vh;
-    background-color: #b4b4b4;
-    border-radius: 20%;
-    margin: 0.4vh;
-    aspect-ratio: 1;
+	background-color: #b4b4b4;
+	border-radius: 20%;
+	margin: 0.4vh;
+	box-sizing: border-box; /* Ensures margins are considered inside cell size */
 
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 1000;
-    font-size: 6vh; /* Set font size relative to the viewport height */
-    display: flex;  /* Flexbox for centering */
-    justify-content: center;  /* Center the content horizontally */
-    align-items: center;  /* Center the content vertically */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	font-family: "Courier New", Courier, monospace;
+	font-weight: 1000;
+
+	font-size: calc(
+		90vmin / (var(--rows) * 1)
+	); /* Dynamically adjust font size */
+	line-height: 1; /* Prevents extra spacing inside the cell */
+
+	aspect-ratio: 1; /* Ensure cells remain square */
+
+	width: 100%; /* Prevents resizing based on content */
+	height: 100%; /* Ensures fixed size, even with content */
+
+	overflow: hidden; /* Ensures content doesn't overflow or affect size */
 }
 
+.pop {
+	transform: scale(1.1);
+	opacity: 0;
+	animation: pop-in 0.2s forwards;
+}
+
+@keyframes pop-in {
+	0% {
+		transform: scale(0.9);
+		opacity: 0;
+	}
+	70% {
+		transform: scale(1.1);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+}
