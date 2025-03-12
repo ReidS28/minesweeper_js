@@ -80,7 +80,7 @@ class Minesweeper {
 				}
 			}
 		}
-	 */
+		 */
 
 		this.uncovered[r][c] = true;
 		const cellDiv = document.querySelector(
@@ -114,10 +114,11 @@ class Minesweeper {
 
 		if (numSurrounding === -1) {
 			cellDiv.innerHTML = "💣";
+			location.reload();
 		}
 
 		if (numSurrounding == 0) {
-			//if (true) {
+		//if (true) {
 			const directions = [
 				[-1, -1],
 				[-1, 0],
