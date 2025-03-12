@@ -51,7 +51,7 @@ class Minesweeper {
 		if (this.uncovered[r][c]) return; // Prevent uncovering already uncovered cells
 
 		// Fun Mode
-		// /*
+		 /*
 		if (!this.mines[r][c]) {
 			const directions = [
 				[-1, -1],
@@ -80,7 +80,7 @@ class Minesweeper {
 				}
 			}
 		}
-		// */
+	 */
 
 		this.uncovered[r][c] = true;
 		const cellDiv = document.querySelector(

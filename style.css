@@ -2,21 +2,21 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh; /* Ensures the main element takes up the full screen height */
-	margin: 0; /* Removes any default margin from the body */
+	height: 100vh;
+	margin: 0;
 }
 
 #game-board-wrapper {
-	width: 80vw; /* Set to 80% of the viewport width */
-	height: 80vh; /* Set to 80% of the viewport height */
+	width: 80vw;
+	height: 80vh;
 	max-width: 80vw;
 	max-height: 80vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	background-color: #323232; /* Optional: background color for the wrapper */
-	border-radius: 2vh; /* Optional: rounded corners for the wrapper */
+	background-color: #323232;
+	border-radius: 2vh;
 }
 
 #game-board {
@@ -34,7 +34,7 @@ main {
 	max-width: 100%;
 	max-height: 100%;
 	aspect-ratio: calc(var(--cols) / var(--rows)); /* Correct aspect ratio */
-	object-fit: contain; /* Ensure the grid fits properly within its container */
+	/* object-fit: contain; /* Ensure the grid fits properly within its container */
 
 	gap: 0%; /* Adds space between the cells */
 }
@@ -53,7 +53,7 @@ main {
 	font-weight: 1000;
 
 	font-size: calc(
-		90vmin / (max(var(--rows), var(--cols)) * 1)
+		90vmin / (max(var(--rows), var(--cols)) * 1.2)
 	); /* Dynamically adjust font size */
 	line-height: 1; /* Prevents extra spacing inside the cell */
 
