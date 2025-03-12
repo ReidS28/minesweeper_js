@@ -22,12 +22,15 @@ main {
 #game-board {
 	background-color: #242424;
 	border-radius: 2vh;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(var(--cols), 1fr);
+	grid-template-rows: repeat(var(--rows), 1fr);
 
 	user-select: none;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-
 }
 
 .cell {
@@ -48,7 +51,9 @@ main {
 	);
 	line-height: 1;
 
-	aspect-ratio: 1 / 1; 
+	aspect-ratio: 1 / 1;
+	width: auto;
+	height: auto;
 }
 
 .pop {
