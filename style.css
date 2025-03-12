@@ -46,15 +46,19 @@ main {
 	font-family: "Courier New", Courier, monospace;
 	font-weight: 1000;
 
-	font-size: calc(
-		90vmin / (max(var(--rows), var(--cols)) * 1.2)
-	);
-	line-height: 1;
-
 	aspect-ratio: 1 / 1;
+
+	/* Make font size fully responsive to cell size */
+	font-size: min(90%, 1em, 10vw, 10vh);
 	width: auto;
 	height: auto;
+
+	/* Adjustments to prevent clipping */
+	line-height: 1;
+	white-space: nowrap;
+	overflow: hidden;
 }
+
 
 .pop {
 	transform: scale(1);

@@ -32,7 +32,3 @@ args = "node server.js"
 [[ports]]
 localPort = 3000
 externalPort = 80
-
-[[ports]]
-localPort = 41343
-externalPort = 3000
